@@ -1,4 +1,4 @@
-package domain;
+package GUI;
 
 import GUI.MyFileChooser;
 import java.awt.image.BufferedImage;
@@ -23,9 +23,6 @@ public class OpenGuard {
 
     /**
      * Método que permite guardar la imagen que se diseñó
-     *
-     * @param format formato de la imagen png o jog
-     * @param image Imagen a guardar
      */
     public void saveImage(String format, BufferedImage image) {
         try {
@@ -38,8 +35,6 @@ public class OpenGuard {
     /**
      * Método que abre la ventana para seleccionar la ruta donde se desea
      * exportar la imagen
-     *
-     * @param image contiene la imagen a guardar
      */
     public void windowsSaveImage(BufferedImage image) {
        try {
@@ -82,8 +77,6 @@ public class OpenGuard {
     /**
      * Método que abre la ventana para obtener la rura donde se encuentra el
      * proyecto
-     *
-     * @return urlToReturn dirección para guardar
      */
     public String windowsOpenProject() {
 
@@ -133,8 +126,6 @@ public class OpenGuard {
     /**
      * Método que abre la ventana para seleccionar la ruta donde se debe guardar
      * el proyecto
-     *
-     * @return urlToReturn dirección para guardar
      */
     public String windowsSaveProject() {
         try {
@@ -183,8 +174,6 @@ public class OpenGuard {
     /**
      * Método que abre la ventana para obtener la ruta donde se encuentra la
      * imagen
-     *
-     * @return url contiene la dirección para abrir
      */
     public URL windowsOpenImage() {
         try {

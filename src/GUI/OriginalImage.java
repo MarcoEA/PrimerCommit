@@ -37,7 +37,6 @@ public class OriginalImage extends JPanel implements MouseListener, Serializable
     /**
      * Método que pinta las líneas que dividirá la imagen que se cargue en
      * cuadrículas del tamaño antes ingresado por el usuario.
-     * @param graphics2D 
      */
     private void paintOriginalImage(Graphics2D graphics2D){  
         //Se pinta la imagen original en el panel.
@@ -60,7 +59,6 @@ public class OriginalImage extends JPanel implements MouseListener, Serializable
     /**
      * Método que se encarga de inicializar la variable Graphics2D y llamar
      * al método paintOriginalImage.
-     * @param g: Graphics.
      */
     @Override
     public void paintComponent(Graphics g) {
@@ -178,16 +176,11 @@ public class OriginalImage extends JPanel implements MouseListener, Serializable
         imageLonding.add(bufferedImage);
     }
 
-    /**
-     * @return the url
-     */
+
     public URL getUrl() {
         return url;
     }
 
-    /**
-     * @param url the url to set
-     */
     public void setUrl(URL url) {
         this.url = url;
     }

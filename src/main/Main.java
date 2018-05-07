@@ -1,6 +1,7 @@
 package main;
 
-import GUI.MainWindow;
+import GUI.CreationProject;
+import GUI.PrincipalWindow;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import sun.font.CreatedFontTracker;
 
 /**
  *
@@ -42,7 +44,7 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        MainWindow mainWindow = new MainWindow();
+        PrincipalWindow mainWindow = new PrincipalWindow();
     }//main
     
 }//class

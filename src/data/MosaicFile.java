@@ -1,4 +1,4 @@
-package File;
+package data;
 
 
 
@@ -19,19 +19,19 @@ import javax.imageio.ImageWriter;
  *
  * @author Marco
  */
-public class SerializableImage {
+public class MosaicFile {
     //Atributos
     public static int width;
     public static int heigth;
     public static int sizeGrid;
     //Constructor
-    public SerializableImage(int width, int heigth, int sizeGrid) {
+    public MosaicFile(int width, int heigth, int sizeGrid) {
         this.width = width;
         this.heigth = heigth;
         this.sizeGrid = sizeGrid;
     }
     //Constructor
-    public SerializableImage() {
+    public MosaicFile() {
         this.width = 0;
         this.heigth = 0;
         this.sizeGrid = 0;
@@ -39,11 +39,8 @@ public class SerializableImage {
     /**
      * Método que escribe en el archivo el mosaico e imagenes que el usuario ha 
      * introducido para realiazar el proyecto
-     * @param out Objeto Serializable
-     * @param subImages Contiene cada subImagen del mosaico con sus respectivas coordenadas
-     * @param imagesLonding Contiene las imagenes que se cargar para modificarlas
-     * @throws IOException 
      */
+    
     public void writeObject(ObjectOutputStream out, ArrayList<SubImage> subImages,
             ArrayList<BufferedImage> imagesLonding) throws IOException {
         //Escritura del tamaño de los dos ArrayList para posteriormente poder leer
@@ -82,10 +79,6 @@ public class SerializableImage {
     /**
      * Método que lee el archivo para retornar el mosaico y las imagenes que fueron 
      * utilizadas en el proyecto
-     * @param in Objeto a leer
-     * @return images Contiene un ArrayList con las subImagenes y otro con BufferedImage
-     * @throws IOException
-     * @throws ClassNotFoundException 
      */
     public ArrayList<Object> readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
         ArrayList<SubImage> subImages = new ArrayList<>();
@@ -117,9 +110,4 @@ public class SerializableImage {
         
         return images;
     }
-    
-          
-        
-        
-
 }

@@ -36,6 +36,7 @@ public class Edition extends JPanel {
      * Método que permite editar la subImagen creando una rotación con respecto
      * a los grados que se le indique
      */
+
     public void paintEdition(Graphics2D graphics2D) throws AWTException {
         if (subImageTemp != null) {
             AffineTransform rotation = new AffineTransform();
@@ -44,8 +45,7 @@ public class Edition extends JPanel {
                     MainWindow.creation.sizeGrid / 2,
                     MainWindow.creation.sizeGrid / 2);
             graphics2D.setTransform(rotation);
-            graphics2D.drawImage(subImageTemp, 0, 0, MainWindow.creation.sizeGrid,
-                    MainWindow.creation.sizeGrid, null);
+    graphics2D.drawImage(subImageTemp, 0, 0, MainWindow.creation.sizeGrid,MainWindow.creation.sizeGrid, null);
         }
     }
 
@@ -60,7 +60,6 @@ public class Edition extends JPanel {
     }
     /**
      *Método que pinta las subImagenes
-     *@param subImage contiene la subImagen para pintar 
      */ 
     public void paintSubImage(SubImage subImage) {
         this.subImage = subImage;
@@ -71,16 +70,10 @@ public class Edition extends JPanel {
     /**
      * Métodos accesores
      */
-    /**
-     * @return the degrees
-     */
     public int getDegrees() {
         return degrees;
     }
 
-    /**
-     * @param degrees the degrees to set
-     */
     public void setDegrees(int degrees) {
         this.degrees = degrees;
         repaint();

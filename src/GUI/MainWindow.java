@@ -1,7 +1,6 @@
 package GUI;
 
-import domain.OpenGuard;
-import File.SerializableImage;
+import data.MosaicFile;
 import domain.SubImage;
 import java.awt.AWTException;
 import java.awt.Color;
@@ -26,6 +25,7 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -46,10 +46,10 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
     public static Edition edition;
     public static CreationProject creation;
     private Dimension dimension;
-    private JButton btnFlipHorizontal, btnFlipVertical, btnApplyChanges, btnDelete, btnSelect;
+    public static JButton btnFlipHorizontal, btnFlipVertical, btnApplyChanges, btnDelete, btnSelect;
     public static BufferedImage imageTemp2;
     private Font font;
-    //Componetes de la GUI
+    public static JCheckBox cbxDelete, cbxSelect;
     private JScrollPane scrollMosaic1, scrollPanel, scrollMosaic;
     private JMenuBar mbBar;
     private JMenu mnFile;
@@ -60,7 +60,7 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
     public MainWindow() {
         //Creación de los componentes de la GUI
         this.setLayout(null);
-        this.font= new Font("Century Gothic", Font.PLAIN , 13);
+        this.font = new Font("Century Gothic", Font.PLAIN, 13);
         this.setTitle("Mosaic Maker");
 
         lblAddImages = new JLabel(new ImageIcon("./ProjectImages/addImages.png"));
@@ -87,12 +87,12 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
         mnFile = new JMenu("Options");
         mnFile.setFont(font);
         mbBar.setBackground(Color.WHITE);
-    
+
         itNew = new JMenuItem("New project");
         itNew.setFont(font);
         itNew.setIcon(new ImageIcon("./ProjectImages/newProject.png"));
         itNew.addActionListener(this);
-        
+
         mnFile.add(itNew);
         setJMenuBar(mbBar);
 
@@ -110,79 +110,87 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
         itOpenProject.addActionListener(this);
         itOpenProject.setIcon(new ImageIcon("./ProjectImages/openProject.jpg"));
         mnFile.add(itOpenProject);
-        
+
         itOpenImage = new JMenuItem("Open image");
         itOpenImage.setFont(font);
         itOpenImage.addActionListener(this);
         itOpenImage.setEnabled(false);
         itOpenImage.setIcon(new ImageIcon("./ProjectImages/open.gif"));
+
         mnFile.add(itOpenImage);
+
         mbBar.add(mnFile);
-        
+
         itSave = new JMenuItem("Save project");
         itSave.setFont(font);
         itSave.addActionListener(this);
         itSave.setIcon(new ImageIcon("./ProjectImages/save.gif"));
         mnFile.add(itSave);
-        
+
         itExport = new JMenuItem("Export mosaic");
         itExport.setFont(font);
         itExport.addActionListener(this);
         itExport.setIcon(new ImageIcon("./ProjectImages/exportImage.png"));
         mnFile.add(itExport);
-        
+
         itClose = new JMenuItem("Close");
         itClose.setFont(font);
         itClose.addActionListener(this);
         itClose.setIcon(new ImageIcon("./ProjectImages/close.gif"));
         mnFile.add(itClose);
 
-        lblBackground = new JLabel(new ImageIcon("./ProjectImages/backgroundMain.jpg"));
-        lblBackground.setBounds(0, 0, 1440, 900);
+        btnSelect = new JButton(new ImageIcon("./ProjectImages/select.jpg"));
+        btnSelect.setBounds(20, 650, 40, 40);
+        btnSelect.setEnabled(false);
+        btnSelect.addActionListener(this);
+        btnSelect.setBorder(null);
 
-        this.setIconImage(new ImageIcon("./ProjectImages/iconMain.jpg").getImage());
+        cbxSelect = new JCheckBox("");
+        cbxSelect.setBounds(60, 650, 30, 40);
+        cbxSelect.setBackground(Color.white);
+        cbxSelect.addActionListener(this);
 
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        dimension = super.getToolkit().getScreenSize();
-        super.setSize(dimension);
-        this.setResizable(false);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
-        //------------------------------------------------------------------------------------------
+        btnDelete = new JButton(new ImageIcon("./ProjectImages/delete.png"));
+        btnDelete.setBounds(120, 650, 40, 40);
+        btnDelete.setEnabled(false);
+        btnDelete.addActionListener(this);
+        btnDelete.setBorder(null);
+
+        cbxDelete = new JCheckBox("");
+        cbxDelete.setBounds(160, 650, 30, 40);
+        cbxDelete.setBackground(Color.white);
+        cbxDelete.setEnabled(false);
+        cbxDelete.addActionListener(this);
+
         btnFlipHorizontal = new JButton(new ImageIcon("./ProjectImages/horizontal.png"));
-        btnFlipHorizontal.setBounds(20, 650, 40, 40);
+        btnFlipHorizontal.setBounds(220, 650, 40, 40);
         btnFlipHorizontal.setEnabled(false);
         btnFlipHorizontal.addActionListener(this);
         btnFlipHorizontal.setBorder(null);
 
         btnFlipVertical = new JButton(new ImageIcon("./ProjectImages/vertical.png"));
-        btnFlipVertical.setBounds(80, 650, 40, 40);
+        btnFlipVertical.setBounds(280, 650, 40, 40);
         btnFlipVertical.setEnabled(false);
         btnFlipVertical.addActionListener(this);
         btnFlipVertical.setBorder(null);
 
-        btnSelect = new JButton(new ImageIcon("./ProjectImages/select.jpg"));
-        btnSelect.setBounds(140, 650, 40, 40);
-        btnSelect.setEnabled(false);
-        btnSelect.addActionListener(this);
-        btnSelect.setBorder(null);
-
-        btnDelete = new JButton(new ImageIcon("./ProjectImages/delete.png"));
-        btnDelete.setBounds(200, 650, 40, 40);
-        btnDelete.setEnabled(false);
-        btnDelete.addActionListener(this);
-        btnDelete.setBorder(null);
-
-        btnApplyChanges = new JButton(new ImageIcon("./ProjectImages/apply.png"));
-        btnApplyChanges.setBounds(260, 650, 40, 40);
+        btnApplyChanges = new JButton(new ImageIcon("./ProjectImages/ok.png"));
+        btnApplyChanges.setBounds(340, 650, 40, 40);
         btnApplyChanges.addActionListener(this);
-        btnApplyChanges.setEnabled(false);
         btnApplyChanges.setBorder(null);
+
+        lblBackground = new JLabel(new ImageIcon("./ProjectImages/backgroundMain.jpg"));
+        lblBackground.setBounds(0, 0, 1440, 900);
+
+        this.setIconImage(new ImageIcon("./ProjectImages/iconMain.jpg").getImage());
+
 //------------------------------------------------------------------------------------------
         add(btnFlipHorizontal);
         add(btnFlipVertical);
         add(btnSelect);
         add(btnDelete);
+        add(cbxSelect);
+        add(cbxDelete);
         add(btnApplyChanges);
         add(lblOpenMosaic);
         add(lblAddImages);
@@ -191,7 +199,7 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
         add(edition);
         add(lblBackground);
 
-           setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
         setResizable(false);
         ((JPanel) getContentPane()).setOpaque(false);
         ImageIcon uno = new ImageIcon(this.getClass().getResource("/assets/backgroundMain.jpg"));
@@ -199,23 +207,19 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
         fondo.setIcon(uno);
         getLayeredPane().add(fondo, JLayeredPane.FRAME_CONTENT_LAYER);
         fondo.setBounds(0, 0, uno.getIconWidth(), uno.getIconHeight());
-        
-     
+
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        dimension = super.getToolkit().getScreenSize();
+        super.setSize(dimension);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        if (e.getSource().equals(itNew)) {
-            //Se instancia la ventana para ingresar los datos (tamaño mosaico y 
-            // tamaño cuadrícula)
-            CreationProject newProject = new CreationProject();
-            itOpenMosaic.setEnabled(true);
-            itOpenImage.setEnabled(true);
-            newProject.setVisible(true);
-            System.out.println("entró");
-        }
-        
+
         if (e.getSource().equals(itOpenImage)) {
             //Se obtiene la imagen dede ruta y se carga al panel contenedor
             OriginalImage panel = new OriginalImage();
@@ -252,6 +256,14 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
             MainWindow.mosaic.updateUI();
             MainWindow.mosaic.changeSubImage();
         }
+        if (e.getSource().equals(itNew)) {
+            //Se instancia la ventana para ingresar los datos (tamaño mosaico y 
+            // tamaño cuadrícula
+            CreationProject newProject = new CreationProject();
+            itOpenMosaic.setEnabled(true);
+            itOpenImage.setEnabled(true);
+//            newProject.setVisible(true);
+        }
 
         if (e.getSource().equals(itExport)) {
             //Se instancia OpenGuard para abrir la ventana y asiganar la ruta donde
@@ -266,8 +278,8 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
         }
 
         if (e.getSource() == itSave) {
-            //Se instancia la SerializableImage para utilizar sus métodos
-            SerializableImage image = new SerializableImage(creation.vWidth,
+            //Se instancia la MosaicFile para utilizar sus métodos
+            MosaicFile image = new MosaicFile(creation.vWidth,
                     creation.vHeigth, creation.sizeGrid);
             String path = new OpenGuard().windowsSaveProject();
             if (path != null) {
@@ -283,8 +295,8 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
         }
 
         if (e.getSource() == itOpenProject) {
-            //Instancia de SerializableImage para utilizar sus métodos
-            SerializableImage image = new SerializableImage();
+            //Instancia de MosaicFile para utilizar sus métodos
+            MosaicFile image = new MosaicFile();
             ObjectInputStream read;
             String path = new OpenGuard().windowsOpenProject();
             if (path != null) {
@@ -339,31 +351,39 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
         if (e.getSource().equals(itClose)) {
             this.dispose();
         }
-        if (e.getSource() == btnSelect) {
-            if (btnSelect.isSelected() == true) {
+
+        if (e.getSource() == getCbxSelect()) {
+
+            if (getCbxSelect().isSelected() == true) {
                 btnFlipHorizontal.setEnabled(true);
                 btnFlipVertical.setEnabled(true);
-//                slrTurn.setEnabled(true);
+                btnDelete.setEnabled(true);
                 btnSelect.setEnabled(true);
+                getCbxDelete().setEnabled(true);
             } else {
                 btnFlipHorizontal.setEnabled(false);
                 btnFlipVertical.setEnabled(false);
-//                slrTurn.setEnabled(false);
-                if (btnDelete.isSelected() == true) {
-                    btnDelete.setSelected(false);
-                }
                 btnDelete.setEnabled(false);
+                btnSelect.setEnabled(false);
+
+                if (getCbxDelete().isSelected() == true) {
+
+                    getCbxDelete().setSelected(false);
+                }
+                getCbxDelete().setEnabled(false);
             }
         }
-        if (e.getSource() == btnDelete) {
-            if (btnDelete.isSelected() == true) {
+        if (e.getSource() == getCbxDelete()) {
+            if (getCbxDelete().isSelected() == true) {
                 btnFlipHorizontal.setEnabled(false);
                 btnFlipVertical.setEnabled(false);
-//                slrTurn.setEnabled(false);
+                btnDelete.setEnabled(true);
+
             } else {
                 btnFlipHorizontal.setEnabled(true);
                 btnFlipVertical.setEnabled(true);
-//                slrTurn.setEnabled(true);
+                btnDelete.setEnabled(false);
+
             }
         }
         if (e.getSource() == btnApplyChanges) {
@@ -410,4 +430,19 @@ public class MainWindow extends JFrame implements ActionListener, Serializable {
         return scaleOp.filter(image, null);
     }
 
+    public JCheckBox getCbxDelete() {
+        return cbxDelete;
+    }
+
+    public void setCbxDelete(JCheckBox cbxDelete) {
+        this.cbxDelete = cbxDelete;
+    }
+
+    public JCheckBox getCbxSelect() {
+        return cbxSelect;
+    }
+
+    public void setCbxSelect(JCheckBox cbxSelect) {
+        this.cbxSelect = cbxSelect;
+    }
 }

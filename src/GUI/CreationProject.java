@@ -22,73 +22,76 @@ import javax.swing.JTextField;
 public class CreationProject extends JFrame implements ActionListener, KeyListener,
         Serializable {
 
-    /**
-     * etiquetas *
-     */
-    
     private JLabel lblSizeMosaic, lblGridSize, lblN, lblIcon, lblValueX, lblValueY;
-    /**
-     * campos de texto*
-     */
     private JTextField txtValueX, txtValueY, txtN;
-    /**
-     * boton*
-     */
     private JButton btnAcept;
     //Atributos
     public static int vWidth;
     public static int vHeigth;
     public static int sizeGrid;
+    private Font font;
 
     public CreationProject() {
         //Creación de los componentes de la GUI
+
         this.setLayout(null);
+        this.setIconImage(new ImageIcon("./ProjectImages/iconMain.jpg").getImage());
+        this.setTitle("Create a new mosaic");
+        this.font = new Font("Century Gothic", Font.PLAIN, 17);
+
         lblSizeMosaic = new JLabel("Size Mosaic");
-        lblSizeMosaic.setFont(new Font("Arial", Font.BOLD, 14));
-        lblSizeMosaic.setForeground(Color.white);
-        lblSizeMosaic.setBounds(50, 10, 90, 20);
-
+        lblSizeMosaic.setFont(font);
+        lblSizeMosaic.setForeground(Color.black);
+        lblSizeMosaic.setBounds(170, 20, 150, 20);
+        
+        
         lblValueX = new JLabel("Value width");
-        lblValueX.setFont(new Font("Arial", Font.BOLD, 14));
-        lblValueX.setForeground(Color.white);
-        lblValueX.setBounds(50, 40, 100, 20);
-
+        lblValueX.setFont(font);
+        lblValueX.setForeground(Color.black);
+        lblValueX.setBounds(50, 50, 100, 50);
+        
+        
         txtValueX = new JTextField();
-        txtValueX.setBounds(140, 40, 50, 20);
+        txtValueX.setBounds(170, 65, 50, 20);
         txtValueX.addKeyListener(this);
+        txtValueX.setBorder(null);
 
         lblValueY = new JLabel("Value height");
-        lblValueY.setFont(new Font("Arial", Font.BOLD, 14));
-        lblValueY.setForeground(Color.white);
-        lblValueY.setBounds(50, 70, 100, 20);
-
+        lblValueY.setFont(font);
+        lblValueY.setForeground(Color.black);
+        lblValueY.setBounds(50, 100, 130, 50);
+        
         txtValueY = new JTextField();
-        txtValueY.setBounds(140, 70, 50, 20);
+        txtValueY.setBounds(170, 115, 50, 20);
         txtValueY.addKeyListener(this);
+        txtValueY.setBorder(null);
 
         lblGridSize = new JLabel("Size Grid (nxn)");
-        lblGridSize.setFont(new Font("Arial", Font.BOLD, 14));
-        lblGridSize.setForeground(Color.white);
-        lblGridSize.setBounds(50, 100, 120, 20);
-
+        lblGridSize.setFont(font);
+        lblGridSize.setForeground(Color.black);
+        lblGridSize.setBounds(150, 170, 120, 50);
+        
         lblN = new JLabel("Value n");
-        lblN.setFont(new Font("Arial", Font.BOLD, 14));
-        lblN.setForeground(Color.white);
-        lblN.setBounds(50, 130, 90, 20);
-
+        lblN.setFont(font);
+        lblN.setForeground(Color.black);
+        lblN.setBounds(50, 220, 90, 20);
+        
         txtN = new JTextField();
-        txtN.setBounds(140, 130, 50, 20);
+        txtN.setBounds(170, 225, 50, 20);
         txtN.addKeyListener(this);
+        txtN.setBorder(null);
 
-        btnAcept = new JButton("Acept");
-        btnAcept.setFont(new Font("Arial", NORMAL, 14));
-        btnAcept.setBounds(80, 170, 80, 20);
+        btnAcept = new JButton(new ImageIcon("./ProjectImages/ok.png"));
+        btnAcept.setBounds(250, 250, 40, 40);
         btnAcept.setVisible(false);
         btnAcept.addActionListener(this);
         btnAcept.setBackground(Color.white);
-        lblIcon = new JLabel(new ImageIcon("./ProjectImages/backgroundMain.jpg"));
-        lblIcon.setBounds(0, 0, 500, 300);
-
+        btnAcept.setFont(font);
+        
+        lblIcon = new JLabel(new ImageIcon("./ProjectImages/fondoDos.jpg"));
+        lblIcon.setBounds(0, 0, 720, 400);
+        
+        
         this.add(lblGridSize);
         this.add(btnAcept);
         this.add(lblN);
@@ -99,8 +102,9 @@ public class CreationProject extends JFrame implements ActionListener, KeyListen
         this.add(txtValueX);
         this.add(txtValueY);
         this.add(lblIcon);
+        
         this.setVisible(true);
-        this.setSize(500, 500);
+        this.setSize(720, 400);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
 
@@ -118,7 +122,6 @@ public class CreationProject extends JFrame implements ActionListener, KeyListen
     }
 
     //Validaciones para que se permita solo introducir valores correctamente
-
     @Override
     public void keyTyped(KeyEvent ke) {
 
